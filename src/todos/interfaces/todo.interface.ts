@@ -3,3 +3,7 @@ export interface Todo {
     actived: boolean
     completed: boolean
 }
+
+export interface IUpdateTodo {
+    completed: boolean
+}

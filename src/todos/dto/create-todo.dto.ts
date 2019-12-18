@@ -6,5 +6,5 @@ export class CreateTodoDto {
 
 
 export class UpdateTodoDto {
-    readonly actived: boolean
+    readonly completed: boolean
 }

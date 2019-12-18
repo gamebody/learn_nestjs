@@ -9,24 +9,60 @@ export class TodosController {
     constructor(private readonly todosService: TodosService) {}
 
     @Get()
-    async findAll(): Promise<Todo[]> {
-        return this.todosService.findAll()
+    async findAll() {
+        const res = await this.todosService.findAll()
+        return {
+            code: 1,
+            data: res,
+            message: "success"
+        }
     }
 
     @Post()
     async create(@Body() CreateTodoDto: CreateTodoDto) {
-        this.todosService.create(CreateTodoDto)
+        const res = await this.todosService.create(CreateTodoDto)
+        return {
+            code: 1,
+            data: res,
+            message: '成功'
+        }
     }
 
-    @Patch('id')
-    update(@Param('id') id: string, @Body() UpdateTodoDto: UpdateTodoDto): string {
-        console.log(`${id}: actived: ${UpdateTodoDto.actived}`)
-        return '更新todos';
+    @Patch(':id')
+    async update(@Param('id') id: number, @Body() UpdateTodoDto: UpdateTodoDto) {
+        try {
+            await this.todosService.update(id, UpdateTodoDto.completed);
+            return {
+                code: 1,
+                data: null,
+                message: "更新成功"
+            }
+        } catch (error) {
+            return {
+                code: 2,
+                data: error.message,
+                message: "更新失败"
+                
+            }
+        }
     }
 
     @Delete(':id')
-    remove(@Param('id') id: string) {
-        return `This action removes a #${id} cat`;
+    async remove(@Param('id') id: number) {
+        try {
+            await this.todosService.delete(id)
+            return {
+                code: 1,
+                data: null,
+                message: "删除成功"
+            }
+        } catch (error) {
+            return {
+                code: 2,
+                data: error.message,
+                message: "删除失败"
+            }
+        }
     }
 
 }
