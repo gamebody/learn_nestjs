@@ -17,7 +17,11 @@ export class TodosService {
     }
 
     async create(todo: todoIterface) {
-        return await this.todoRepository.save(todo)
+        return await this.todoRepository.save({
+            text: todo.text,
+            actived: false,
+            completed: false
+        })
     }
 
     async delete(id: number) {
