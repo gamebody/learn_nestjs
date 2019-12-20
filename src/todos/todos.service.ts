@@ -33,8 +33,6 @@ export class TodosService {
         let todo = await this.todoRepository.findOne(id)
         todo.completed = Boolean(completed)
 
-        console.log(todo)
-
         return this.todoRepository.save(todo)
     }
 }
